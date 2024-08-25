@@ -1,14 +1,14 @@
 [project]
-name = "octodns"
+name = "octodns-ndom91"
 version = "0.1.0"
-description = "octodns sync"
+description = "ndom91 octodns config"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "octodns",
-    "octodns-bind",
-    "octodns-cloudflare",
-    "octodns-netbox-dns",
+    "octodns >=1.9.1",
+    "octodns-bind >=0.0.6",
+    "octodns-cloudflare >=0.0.7",
+    "octodns-netbox-dns >=0.3.7",
 ]
 
 [build-system]
@@ -16,4 +16,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.uv.sources]
-octodns = { workspace = true }
+octodns-ndom91 = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["octodns.sh"]
+
