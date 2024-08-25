@@ -1,0 +1,19 @@
+[project]
+name = "octodns"
+version = "0.1.0"
+description = "octodns sync"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "octodns",
+    "octodns-bind",
+    "octodns-cloudflare",
+    "octodns-netbox-dns",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+octodns = { workspace = true }
