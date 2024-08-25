@@ -2,7 +2,13 @@
 
 set -e
 
-# usage function
+source env.sh
+source venv/bin/activate
+export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+CONFIG="netbox.yml"
+DEBUG=
+
 function usage()
 {
    cat << HEREDOC
@@ -16,14 +22,6 @@ function usage()
 
 HEREDOC
 }
-
-CONFIG="netbox.yml"
-DEBUG=
-
-export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-source env.sh
-
-source venv/bin/activate
 
 while [[ $# -gt 0 ]]; do
     key="$1"
