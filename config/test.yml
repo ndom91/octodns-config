@@ -1,0 +1,47 @@
+---
+providers:
+  config:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./config
+    default_ttl: 3600
+    enforce_order: True
+    processors:
+      acme:
+        class: octodns.processor.acme.AcmeMangingProcessor
+      no-root-ns:
+        class: octodns.processor.filter.IgnoreRootNsFilter
+      only-a-and-aaaa:
+        class: octodns.processor.filter.TypeAllowlistFilter
+        allowlist:
+          - A
+          - AAAA
+      meta:
+        class: octodns.processor.meta.MetaProcessor
+  zonefile:
+    class: octodns_bind.ZoneFileSource
+    directory: ./zonefiles
+    # file_extension: .zone
+    check_origin: false
+  cloudflare:
+    class: octodns_cloudflare.CloudflareProvider
+    email: env/CLOUDFLARE_EMAIL
+    token: env/CLOUDFLARE_TOKEN
+    account_id: env/CLOUDFLARE_ACCOUNT_ID
+
+zones:
+  puff.lan.:
+    sources:
+      - config
+    targets:
+      - zonefile
+    processors:
+        - no-root-ns
+  briefkastenhq.com.:
+    sources:
+      - config
+    targets:
+      - cloudflare
+    processors:
+        - acme
+        - no-root-ns
+        - only-a-and-aaaa

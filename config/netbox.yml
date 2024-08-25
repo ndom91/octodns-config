@@ -1,0 +1,27 @@
+providers:
+  config:
+    class: octodns_netbox_dns.NetBoxDNSProvider
+    url: "https://netbox.puff.lan"
+    token: env/NETBOX_TOKEN
+  zonefile:
+    class: octodns_bind.ZoneFileSource
+    directory: ./zonefiles
+    # file_extension: .zone
+    check_origin: false
+  cloudflare:
+    class: octodns_cloudflare.CloudflareProvider
+    email: env/CLOUDFLARE_EMAIL
+    token: env/CLOUDFLARE_TOKEN
+    account_id: env/CLOUDFLARE_ACCOUNT_ID
+
+zones:
+  puff.lan.:
+    sources:
+      - config
+    targets:
+      - zonefile
+  briefkastenhq.com.:
+    sources:
+      - config
+    targets:
+      - cloudflare
